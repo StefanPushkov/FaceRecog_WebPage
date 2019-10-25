@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7b28348c-0935-409e-b725-b1692f53e32d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/web_camera_recorder/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_camera_recorder/camera.py" afterDir="false" />
-    </list>
+    <list default="true" id="7b28348c-0935-409e-b725-b1692f53e32d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +13,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web_camera_recorder/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="53" column="55" lean-forward="true" selection-start-line="53" selection-start-column="55" selection-end-line="53" selection-end-column="55" />
+            <state relative-caret-position="156">
+              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="45" selection-end-column="93" />
               <folding>
                 <element signature="e#0#68#0" expanded="true" />
               </folding>
@@ -25,10 +23,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web_camera_recorder/server78.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="16" column="84" selection-start-line="16" selection-start-column="84" selection-end-line="16" selection-end-column="84" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web_camera_recorder/camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="57" column="20" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
+            <state relative-caret-position="2316">
+              <caret line="152" column="12" lean-forward="true" selection-start-line="152" selection-start-column="12" selection-end-line="152" selection-end-column="12" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -56,6 +63,7 @@
         <option value="$PROJECT_DIR$/web_camera_recorder/config.py" />
         <option value="$PROJECT_DIR$/web_camera_recorder/server.py" />
         <option value="$PROJECT_DIR$/web_camera_recorder/camera.py" />
+        <option value="$PROJECT_DIR$/web_camera_recorder/server78.py" />
       </list>
     </option>
   </component>
@@ -170,19 +178,19 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1572012178172</updated>
-      <workItem from="1572012179421" duration="2212000" />
+      <workItem from="1572012179421" duration="3120000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2212000" />
+    <option name="totallyTimeSpent" value="3120000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2497979" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14551334" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" />
@@ -241,23 +249,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/web_camera_recorder/camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2316">
+          <caret line="152" column="12" lean-forward="true" selection-start-line="152" selection-start-column="12" selection-end-line="152" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web_camera_recorder/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="53" column="55" lean-forward="true" selection-start-line="53" selection-start-column="55" selection-end-line="53" selection-end-column="55" />
+        <state relative-caret-position="156">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="45" selection-end-column="93" />
           <folding>
             <element signature="e#0#68#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web_camera_recorder/camera.py">
+    <entry file="file://$PROJECT_DIR$/web_camera_recorder/server78.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="57" column="20" selection-start-line="57" selection-start-column="20" selection-end-line="57" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="320">
+          <caret line="16" column="84" selection-start-line="16" selection-start-column="84" selection-end-line="16" selection-end-column="84" />
         </state>
       </provider>
     </entry>
