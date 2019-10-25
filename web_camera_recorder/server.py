@@ -51,4 +51,4 @@ def video_viewer():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    app.run(host='localhost', port='5000', threaded=True)
+    app.run(host='127.0.0.1', port='7070', threaded=True)
