@@ -2,7 +2,7 @@ import cv2
 import threading
 import imutils
 import face_recognition
-import web_camera_recorder.config as cf
+import config as cf
 import datetime
 import pickle
 import os
