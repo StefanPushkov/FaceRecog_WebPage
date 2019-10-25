@@ -42,7 +42,7 @@ class VideoCamera(object):
 
     def __init__(self):
         # Open a camera
-        self.cap = cv2.VideoCapture('rtsp://192.168.10.165:554')
+        self.cap = cv2.VideoCapture('rtsp://80.254.24.22:554') # rtsp://192.168.10.165:554
       
         # Initialize video recording environment
         self.is_record = False
