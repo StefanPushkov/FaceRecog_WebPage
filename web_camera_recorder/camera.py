@@ -47,12 +47,7 @@ class VideoCamera(object):
 
         # Thread for recording
         self.recordingThread = None
-        if not os.path.exists(cf.base_dir + '/DB_csv'):
-            os.makedirs(cf.base_dir + '/DB_csv')
-            with open(cf.base_dir + '/DB_csv/records.csv', 'a') as f:
-                f.write("Person; Time")
-                f.write("\n")
-    
+        
     def __del__(self):
         self.cap.release()
     
