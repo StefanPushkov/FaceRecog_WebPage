@@ -41,9 +41,9 @@ def video_stream():
             global_frame = frame
             yield (b'--frame\r\n'
                     b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-        else:
-            yield (b'--frame\r\n'
-                            b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
+        # else:
+         #   yield (b'--frame\r\n'
+         #                   b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
 
 @app.route('/video_viewer')
 def video_viewer():
@@ -52,3 +52,4 @@ def video_viewer():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7070', threaded=True)
+    # app.run(host='localhost', port='7070', threaded=True)

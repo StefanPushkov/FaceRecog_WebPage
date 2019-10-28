@@ -17,11 +17,7 @@ class RecordingThread (threading.Thread):
         fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         self.out = cv2.VideoWriter('./static/video.avi',fourcc, 20.0, (640,480))
 
-        if not os.path.exists(cf.base_dir + '/DB_csv'):
-            os.makedirs(cf.base_dir + '/DB_csv')
-            with open(cf.base_dir + '/DB_csv/records.csv', 'a') as f:
-                f.write("Person; Time")
-                f.write("\n")
+
 
     def run(self):
         while self.isRunning:
@@ -47,19 +43,29 @@ class VideoCamera(object):
         # Initialize video recording environment
         self.is_record = False
         self.out = None
+        self.frame_counter = 0
 
         # Thread for recording
         self.recordingThread = None
+        if not os.path.exists(cf.base_dir + '/DB_csv'):
+            os.makedirs(cf.base_dir + '/DB_csv')
+            with open(cf.base_dir + '/DB_csv/records.csv', 'a') as f:
+                f.write("Person; Time")
+                f.write("\n")
     
     def __del__(self):
         self.cap.release()
     
     def get_frame(self):
-        num_frames = 20
+
         data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
         known_encodings, known_names = data['encodings'], data['names']
-        for i in range(0, num_frames):
-            ret, frame = self.cap.read()
+        # frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+        ret, frame = self.cap.read()
+        self.frame_counter += 1
+
+        if self.frame_counter % 30 == 0:
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             rgb_resize = imutils.resize(rgb, width=1050)
 
