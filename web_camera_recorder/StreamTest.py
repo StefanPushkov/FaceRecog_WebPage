@@ -4,7 +4,7 @@ import cv2
 class VideoCamera(object):
     def __init__(self):
         # Open a camera
-        self.cap = cv2.VideoCapture('rtsp://80.254.24.22:554')  # rtsp://192.168.10.165:554
+        self.cap = cv2.VideoCapture(0)  # rtsp://192.168.10.165:554
 
         # Initialize video recording environment
         self.is_record = False
@@ -17,6 +17,7 @@ class VideoCamera(object):
         self.cap.release()
 
     def get_frame(self):
+        print('Get')
         ret, frame = self.cap.read()
 
         if ret:
@@ -35,14 +36,20 @@ def video_stream():
 
     while True:
         frame = video_camera.get_frame()
-
+        print('byte')
         if frame != None:
             global_frame = frame
+            print('Op Byte thread!')
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
         else:
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
 
+
+def video_viewer():
+    print("a")
+    return video_stream()
+
 while True:
-    video_stream()
+    video_viewer()
