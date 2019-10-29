@@ -135,8 +135,8 @@ class VideoCamera(object):
                 #         self.out.release()
                 #         self.out = None
 
-                return jpeg.tobytes()
-
+                #return jpeg.tobytes()
+                return jpeg
             else:
                 return None
 
