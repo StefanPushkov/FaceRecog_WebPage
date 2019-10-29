@@ -18,3 +18,5 @@ def video_stream():
         #    yield (b'--frame\r\n'
         #           b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
 
+while True:
+    video_stream()
