@@ -117,9 +117,12 @@ class VideoCamera(object):
                 y = top - 15 if top - 15 > 15 else top + 15
                 cv2.putText(rgb_resize, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.75, (0, 255, 0), 2)
-
-            if ret:
-                ret, jpeg = cv2.imencode('.jpg', rgb_resize)
+            return rgb_resize
+            ############################
+                # JUST FOR FFMPEG
+            ############################
+            # if ret:
+            #     ret, jpeg = cv2.imencode('.jpg', rgb_resize)
 
                 # Record video
                 # if self.is_record:
@@ -136,9 +139,9 @@ class VideoCamera(object):
                 #         self.out = None
 
                 #return jpeg.tobytes()
-                return jpeg
-            else:
-                return None
+            #    return jpeg
+            #else:
+            #    return None
 
     def start_record(self):
         self.is_record = True
