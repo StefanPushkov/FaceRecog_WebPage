@@ -2,8 +2,8 @@ from camera import VideoCamera
 import sys
 
 def video_stream():
-    global video_camera
-    global global_frame
+    video_camera = 0
+    
 
     if video_camera == None:
         video_camera = VideoCamera()
