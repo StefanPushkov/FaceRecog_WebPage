@@ -1,3 +1,4 @@
+'''
 import sys
 import  cv2
 import config as cf
@@ -85,3 +86,37 @@ def video_stream():
         #           b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
 
 video_stream()
+'''
+
+import cv2
+import subprocess as sp
+import ffmpeg
+
+
+cap = cv2.VideoCapture('rtsp://80.254.24.22:554')
+ret_check, frame_check = cap.read()
+height, width, ch = frame_check.shape
+
+
+dimension = '{}x{}'.format(width, height)
+f_format = 'bgr24' # remember OpenCV uses bgr format
+fps = str(cap.get(cv2.CAP_PROP_FPS))
+
+
+# ffmpeg -f rawvideo -pixel_format rgb24  -video_size 640x480 -i  "tcp://127.0.0.1:2345" -codec:v libx264 -pix_fmt yuv420p Video.mp4
+command = [ffmpeg,
+            '-f', 'rawvideo', '-pixel_format', 'yuv420p', '-video_size', dimension , f_format, '-i', 'rtsp://80.254.24.22:554', '-codec:v',
+           'libx264', '-crf', '20', '-preset', 'veryfast', '-f', 'flv', 'http://localhost:7800']
+
+proc = sp.Popen(command, stdin=sp.PIPE, stderr=sp.PIPE)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    proc.stdin.write(frame.tostring())
+
+cap.release()
+proc.stdin.close()
+proc.stderr.close()
+proc.wait()
