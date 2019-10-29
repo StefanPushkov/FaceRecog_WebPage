@@ -114,7 +114,7 @@ while True:
     ret, frame = cap.read()
     if not ret:
         break
-    proc.stdin.write(frame.tostring())
+    proc.stdin.write(frame.tostring().decode('utf-8'))
 
 cap.release()
 proc.stdin.close()
