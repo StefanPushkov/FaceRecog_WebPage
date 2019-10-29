@@ -69,7 +69,8 @@ def video_stream():
             y = top - 15 if top - 15 > 15 else top + 15
             cv2.putText(rgb_resize, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                         0.75, (0, 255, 0), 2)
-
+        if ret:
+            ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
         sys.stdout.write(rgb_resize.tostring())
         # else:
         #    yield (b'--frame\r\n'
