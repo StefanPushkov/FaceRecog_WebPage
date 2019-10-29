@@ -74,7 +74,7 @@ def video_stream():
 
         if ret:
             ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
-            return rgb_resize
+            sys.stdout.write(rgb_resize.tostring())
 
         # sys.stdout.write(rgb_resize.tostring())
         # return rgb_resize.tostring()
