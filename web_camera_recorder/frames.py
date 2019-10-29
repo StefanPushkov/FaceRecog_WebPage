@@ -1,8 +1,10 @@
-from camera import VideoCamera
 import sys
 import  cv2
-import config as  cf
+import config as cf
 import pickle
+import face_recognition
+import imutils
+import datetime
 
 def video_stream():
 
@@ -69,9 +71,15 @@ def video_stream():
             y = top - 15 if top - 15 > 15 else top + 15
             cv2.putText(rgb_resize, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                         0.75, (0, 255, 0), 2)
+
         if ret:
             ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
-        sys.stdout.write(rgb_resize.tostring())
+            return rgb_resize
+
+        # sys.stdout.write(rgb_resize.tostring())
+        # return rgb_resize.tostring()
+
+
         # else:
         #    yield (b'--frame\r\n'
         #           b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
