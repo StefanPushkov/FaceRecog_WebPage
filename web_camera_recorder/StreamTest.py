@@ -184,7 +184,7 @@ while True:
         # print(w, h)
         # return str(rgb_resize.tostring())
         # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
-    proc.stdin.write(frame.tostring())
+        proc.stdin.write(rgb_resize.tostring())
 
 cap.release()
 proc.stdin.close()
