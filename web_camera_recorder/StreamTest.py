@@ -1,4 +1,4 @@
-'''
+
 import sys
 import  cv2
 import config as cf
@@ -91,7 +91,7 @@ import datetime
 import face_recognition
 
 input_file = 'rtsp://80.254.24.22:554'
-output_file = ''
+
 
 cap = cv2.VideoCapture(input_file)
 t, frame = cap.read()
@@ -190,3 +190,4 @@ cap.release()
 proc.stdin.close()
 proc.stderr.close()
 proc.wait()
+'''
