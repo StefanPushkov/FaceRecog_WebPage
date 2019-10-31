@@ -102,7 +102,7 @@ dimension = '{}x{}'.format(width, height)
 f_format = 'bgr24' # remember OpenCV uses bgr format
 fps = str(cap.get(cv2.CAP_PROP_FPS))
 
-command = [ffmpeg,
+command = ['ffmpeg',
         '-f', 'rawvideo',
         '-pix_fmt','yuv420p',
         '-s', '1920x1080',
