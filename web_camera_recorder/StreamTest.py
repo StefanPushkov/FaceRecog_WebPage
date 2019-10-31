@@ -9,13 +9,15 @@ import datetime
 def video_stream():
 
     video_camera = cv2.VideoCapture('rtsp://80.254.24.22:554')
+    video_camera.set(cv2.CAP_PROP_FPS, 1)
     data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
     known_encodings, known_names = data['encodings'], data['names']
 
 
     ret, frame = video_camera.read()
-    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    rgb_resize = imutils.resize(rgb, width=1050)
+    rgb_resize = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    # rgb_resize = imutils.resize, width=1050)
+
 
     boxes = face_recognition.face_locations(rgb_resize,
                                             model='hog')
@@ -28,7 +30,7 @@ def video_stream():
         # attempt to match each face in the input image to our known
         # encodings
         matches = face_recognition.compare_faces(known_encodings,
-                                                    encoding)
+                                                 encoding)
         detection_at = datetime.datetime.now()
         name = "Unknown"
 
@@ -66,11 +68,15 @@ def video_stream():
 
         # draw the predicted face name on the image
         cv2.rectangle(rgb_resize, (left, top), (right, bottom),
-                        (0, 255, 0), 2)
+                      (0, 255, 0), 2)
         y = top - 15 if top - 15 > 15 else top + 15
         cv2.putText(rgb_resize, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                     0.75, (0, 255, 0), 2)
-
     if ret:
-        ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
-        return rgb_resize.tostring()
+
+        rgb_resize = cv2.cvtColor(rgb_resize, cv2.COLOR_RGB2YUV_I420)
+        #w, h, c = rgb_resize.shape
+        #print(w, h)
+        return str(rgb_resize.tostring())
+        # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
+        # return str(rgb_resize.tostring())
