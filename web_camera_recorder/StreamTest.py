@@ -16,10 +16,10 @@ def video_stream():
 
 
     ret, frame = video_camera.read()
-    # rgb_resize = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    rgb_resize = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
     # rgb_resize = imutils.resize, width=1050)
 
-    rgb_resize = frame
+
     boxes = face_recognition.face_locations(rgb_resize,
                                             model='hog')
 
