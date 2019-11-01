@@ -9,7 +9,7 @@ import datetime
 
 def video_stream():
 
-    video_camera = cv2.VideoCapture('rtsp://80.254.24.22:554') # rtsp://192.168.10.165:554 # rtsp://80.254.24.22:554
+    video_camera = cv2.VideoCapture('rtsp://192.168.10.165:554') # rtsp://192.168.10.165:554 # rtsp://80.254.24.22:554
     video_camera.set(cv2.CAP_PROP_FPS, 25)
     data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
     known_encodings, known_names = data['encodings'], data['names']
@@ -75,6 +75,9 @@ def video_stream():
                     0.75, (0, 255, 0), 2)
 
     rgb_resize = cv2.cvtColor(rgb_resize, cv2.COLOR_RGB2YUV_I420)
+    #total = int(rgb_resize.get(cv2.CAP_PROP_FRAME_COUNT))
+    #print(total)
+
     #w, h, c = rgb_resize.shape
     #print(w, h)
     # return str(rgb_resize.tostring())
@@ -82,7 +85,7 @@ def video_stream():
         # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
         # return str(rgb_resize.tostring())
 
-
+video_stream()
 '''
 
 import cv2
