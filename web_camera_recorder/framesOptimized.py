@@ -83,13 +83,13 @@ def video_stream():
                 cv2.putText(rgb_resize, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.75, (0, 255, 0), 2)
 
-            rgb_resize = cv2.cvtColor(rgb_resize, cv2.COLOR_RGB2YUV)
+            rgb_resize = cv2.cvtColor(rgb_resize, cv2.COLOR_RGB2YUV_I420)
             # cv2.imshow('A', rgb_resize)
             key = cv2.waitKey(1) & 0xFF
 
             if key == ord("q"):
                 break
-            return rgb_resize.tostring()
+            sys.stdout.write(rgb_resize.tostring())
     video_camera.release()
     cv2.destroyAllWindows()
             # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
