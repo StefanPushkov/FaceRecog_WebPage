@@ -14,16 +14,17 @@ import face_recognition
 # ffmpeg setup
 def StreamRecog():
     video = cv2.VideoCapture('rtsp://80.254.24.22:554')
+    video.set(cv2.CAP_PROP_FPS, 25)
     data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
     known_encodings, known_names = data['encodings'], data['names']
-    
+
     # Resized  1440x810, # Not resized 1920x1080
     p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810', '-r', '25',
                '-i', 'pipe:0', '-c:v', 'libx264', '-crf', '20', '-preset', 'veryfast', '-f', 'flv',
                'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
     while True:
         ret, frame = video.read()
-        video.set(cv2.CAP_PROP_FPS, 25)
+
         if ret:
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             # Resize frame of video to 1/4 size for faster face recognition processing
