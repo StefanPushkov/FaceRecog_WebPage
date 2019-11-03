@@ -22,7 +22,7 @@ while True:
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
         im = Image.fromarray(frame)
-        im.save(p.stdin, 'JPEG')
+        im.save(p.stdin, 'YUV420')
     else:
         break
 
