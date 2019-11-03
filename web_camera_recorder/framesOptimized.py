@@ -1,6 +1,6 @@
 import sys
 import cv2
-import web_camera_recorder.config as cf
+import config as cf
 import pickle
 import face_recognition
 import imutils
