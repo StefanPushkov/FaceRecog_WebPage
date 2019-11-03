@@ -11,9 +11,9 @@ data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb"
 known_encodings, known_names = data['encodings'], data['names']
 
 def video_stream():
-    # video_camera = cv2.VideoCapture(0)
+    video_camera = cv2.VideoCapture(0)
     time.sleep(2.0)
-    video_camera = cv2.VideoCapture('rtsp://80.254.24.22:554')
+    #video_camera = cv2.VideoCapture('rtsp://80.254.24.22:554')
     # video_camera = open_cam_rtsp("rtsp://170.93.143.139/rtplive/470011e600ef003a004ee33696235daa", 1920, 1080, 200)
 
 
@@ -83,7 +83,7 @@ def video_stream():
                 cv2.putText(rgb_resize, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.75, (0, 255, 0), 2)
 
-            rgb_resize = cv2.cvtColor(rgb_resize, cv2.COLOR_RGB2YUV_I420)
+            rgb_resize = cv2.cvtColor(rgb_resize, cv2.COLOR_RGB2YUV)
             # cv2.imshow('A', rgb_resize)
             key = cv2.waitKey(1) & 0xFF
 
@@ -102,8 +102,7 @@ def video_stream():
             # else:
             #    yield (b'--frame\r\n'
             #           b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
-while True:
-    video_stream()
+video_stream()
 
 '''
 
