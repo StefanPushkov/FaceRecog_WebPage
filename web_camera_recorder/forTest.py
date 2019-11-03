@@ -13,8 +13,8 @@ import imutils
 
 video = cv2.VideoCapture('rtsp://80.254.24.22:554')
 
-p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810', '-r', '25',
-           '-i', 'pipe:0', '-c:v', 'libx264', '-crf', '20', '-preset', '-f', 
+p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1920x1080', '-r', '25',
+           '-i', 'pipe:0', '-c:v', 'libx264', '-crf', '20', '-preset', 'veryfast', '-f', 'flv',
            'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
 while True:
     ret, frame = video.read()
