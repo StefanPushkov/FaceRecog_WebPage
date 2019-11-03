@@ -20,9 +20,9 @@ while True:
     ret, frame = video.read()
     if ret:
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
         im = Image.fromarray(frame)
-        im.save(p.stdin)
+        im.save(p.stdin, 'JPEG')
     else:
         break
 
