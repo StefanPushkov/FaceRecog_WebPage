@@ -89,7 +89,7 @@ def video_stream():
 
             if key == ord("q"):
                 break
-            sys.stdout.write(rgb_resize.tostring())
+            sys.stdout.write(str(rgb_resize.tostring()))
     video_camera.release()
     cv2.destroyAllWindows()
             # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
