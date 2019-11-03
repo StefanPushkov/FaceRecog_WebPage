@@ -12,8 +12,6 @@ import imutils
 # ffmpeg setup
 
 video = cv2.VideoCapture('rtsp://80.254.24.22:554')
-r, cap = video.read()
-print(str(cap.get(cv2.CAP_PROP_FPS)))
 
 p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810', '-r', '25',
            '-i', 'pipe:0', '-c:v', 'libx264', '-crf', '20', '-preset', 'veryfast', '-f', 'flv',
