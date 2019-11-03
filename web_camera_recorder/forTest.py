@@ -18,6 +18,7 @@ p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810', 
            'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
 while True:
     ret, frame = video.read()
+    video.set(cv2.CAP_PROP_FPS, 25)
     if ret:
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
