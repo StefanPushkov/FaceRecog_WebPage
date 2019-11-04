@@ -14,6 +14,7 @@ def video_stream():
     #video_camera = cv2.VideoCapture(0)
     time.sleep(2.0)
     video_camera = cv2.VideoCapture('rtsp://80.254.24.22:554')
+    video_camera.set(cv2.CAP_PROP_FPS, 25)
     # video_camera = open_cam_rtsp("rtsp://170.93.143.139/rtplive/470011e600ef003a004ee33696235daa", 1920, 1080, 200)
 
 
@@ -34,16 +35,16 @@ def video_stream():
             sys.stdout.write(str(rgb.tostring()))
     video_camera.release()
     cv2.destroyAllWindows()
-            # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
-            # sys.stdout.write(str(rgb_resize.tostring()))
+    # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
+    # sys.stdout.write(str(rgb_resize.tostring()))
 
-            # sys.stdout.write(rgb_resize.tostring())
-            # return rgb_resize.tostring()
+    # sys.stdout.write(rgb_resize.tostring())
+    # return rgb_resize.tostring()
 
 
-            # else:
-            #    yield (b'--frame\r\n'
-            #           b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
+    # else:
+    #    yield (b'--frame\r\n'
+    #           b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
 video_stream()
 
 '''
