@@ -19,20 +19,23 @@ def video_stream():
 
 
 
-
+    frame_counter = 0
     while True:
         # Grab video frames
         ret, frame = video_camera.read()
+        frame_counter += 1
         if ret:
-            # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-            rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            if frame_counter %  5 ==0 :
 
-            # cv2.imshow('A', rgb_resize)
-            key = cv2.waitKey(1) & 0xFF
+                # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
+                rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-            if key == ord("q"):
-                break
-            sys.stdout.write(str(rgb.tostring()))
+                # cv2.imshow('A', rgb_resize)
+                key = cv2.waitKey(1) & 0xFF
+
+                if key == ord("q"):
+                    break
+                sys.stdout.write(str(rgb.tostring()))
     video_camera.release()
     cv2.destroyAllWindows()
     # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
