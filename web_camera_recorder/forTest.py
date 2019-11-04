@@ -92,7 +92,7 @@ def StreamRecog():
             break
         p.communicate(input=frame.tostring())
 
-    p.stdin.close()
+    #p.stdin.close()
     p.wait()
     video.release()
     cv2.destroyAllWindows()
