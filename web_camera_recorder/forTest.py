@@ -17,11 +17,11 @@ def StreamRecog():
     video.set(cv2.CAP_PROP_FPS, 25)
     data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
     known_encodings, known_names = data['encodings'], data['names']
+
     # Resized  1440x810, # Not resized 1920x1080
     p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810', '-r', '25',
                '-i', 'pipe:0', '-c:v', 'libx264', '-crf', '20', '-preset', 'veryfast', '-f', 'flv',
                'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
-
     while True:
         ret, frame = video.read()
 
@@ -85,14 +85,12 @@ def StreamRecog():
                             0.75, (0, 255, 0), 2)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
             p.stdin.write(frame.tostring())
-            #p.communicate(input=frame.tostring())
             # im = Image.fromarray(frame)
             # im.save(p.stdin, 'YUV420')
         else:
             break
-        p.communicate(input=frame.tostring())
 
-    #p.stdin.close()
+    p.stdin.close()
     p.wait()
     video.release()
     cv2.destroyAllWindows()
