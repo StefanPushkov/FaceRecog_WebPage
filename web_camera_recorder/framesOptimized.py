@@ -48,7 +48,12 @@ def video_stream():
     # else:
     #    yield (b'--frame\r\n'
     #           b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
-video_stream()
+
+
+try:
+    video_stream()
+except BrokenPipeError as e:
+    pass
 
 '''
 
