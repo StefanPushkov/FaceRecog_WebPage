@@ -25,7 +25,7 @@ def StreamRecog():
     # Resized  1440x810, # Not resized 1920x1080
     p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-s', '1440x810',
                '-i', '-', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-preset', 'ultrafast', '-f', 'flv',
-               'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
+               '-b:v', '5000k', 'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
     while True:
         ret, frame = video.read()
 
