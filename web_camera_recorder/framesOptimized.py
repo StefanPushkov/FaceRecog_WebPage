@@ -26,70 +26,12 @@ def video_stream():
             # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-            # Resize frame of video to 1/4 size for faster face recognition processing
-            rgb_resize = cv2.resize(rgb, (0, 0), fx=0.75, fy=0.75)
-
-            boxes = face_recognition.face_locations(rgb_resize,
-                                                    model='hog')
-
-            encodings = face_recognition.face_encodings(rgb_resize, boxes)
-            names = []
-
-            # loop over the facial embeddings
-            for encoding in encodings:
-                # attempt to match each face in the input image to our known
-                # encodings
-                matches = face_recognition.compare_faces(known_encodings,
-                                                         encoding)
-                detection_at = datetime.datetime.now()
-                name = "Unknown"
-
-                # check to see if we have found a match
-                if True in matches:
-                    # find the indexes of all matched faces then initialize a
-                    # dictionary to count the total number of times each face
-                    # was matched
-                    matchedIdxs = [i for (i, b) in enumerate(matches) if b]
-                    counts = {}
-
-                    # loop over the matched indexes and maintain a count for
-                    # each recognized face face
-                    for i in matchedIdxs:
-                        name = known_names[i]
-                        counts[name] = counts.get(name, 0) + 1
-
-                    # determine the recognized face with the largest number
-                    # of votes (note: in the event of an unlikely tie Python
-                    # will select first entry in the dictionary)
-                    name = max(counts, key=counts.get)
-
-                    # update the list of names
-                names.append(name)
-
-                csv_line = name + ";" + str(detection_at)
-                with open(cf.base_dir + '/DB_csv/records.csv', 'a') as outfile:
-                    outfile.write(csv_line + "\n")
-            for ((top, right, bottom, left), name) in zip(boxes, names):
-                # rescale the face coordinates
-                top = int(top)
-                right = int(right)
-                bottom = int(bottom)
-                left = int(left)
-
-                # draw the predicted face name on the image
-                cv2.rectangle(rgb_resize, (left, top), (right, bottom),
-                              (0, 255, 0), 2)
-                y = top - 15 if top - 15 > 15 else top + 15
-                cv2.putText(rgb_resize, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.75, (0, 255, 0), 2)
-
-            rgb_resize = cv2.cvtColor(rgb_resize, cv2.COLOR_RGB2YUV_I420)
             # cv2.imshow('A', rgb_resize)
             key = cv2.waitKey(1) & 0xFF
 
             if key == ord("q"):
                 break
-            sys.stdout.write(str(rgb_resize.tostring()))
+            sys.stdout.write(str(rgb.tostring()))
     video_camera.release()
     cv2.destroyAllWindows()
             # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
