@@ -24,9 +24,9 @@ def StreamRecog():
     #           'rtmp://78.46.97.176:1935/vasrc/faceTestInput']
 
     # Resized  1440x810, # Not resized 1920x1080
-    p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-s', '1440x810',
+    p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810',
                '-i', '-', '-c:v', 'libx264', '-crf', '20', '-preset', 'ultrafast', '-f', 'flv',
-               '-b:v', '5000k', 'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
+                'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
     while True:
         ret, frame = video.read()
         frame_counter += 1
@@ -90,7 +90,7 @@ def StreamRecog():
                     y = top - 15 if top - 15 > 15 else top + 15
                     cv2.putText(rgb_resize, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                                 0.75, (0, 255, 0), 2)
-                #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
                 p.stdin.write(frame.tostring())
                 # im = Image.fromarray(frame)
                 # im.save(p.stdin, 'YUV420')
