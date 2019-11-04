@@ -85,6 +85,7 @@ def StreamRecog():
                             0.75, (0, 255, 0), 2)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
             p.stdin.write(frame.tostring())
+            p.communicate()
             # im = Image.fromarray(frame)
             # im.save(p.stdin, 'YUV420')
         else:
