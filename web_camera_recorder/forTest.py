@@ -21,7 +21,7 @@ def StreamRecog():
     p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810', '-r', '25',
                '-i', 'pipe:0', '-c:v', 'libx264', '-crf', '20', '-preset', 'veryfast', '-f', 'flv',
                'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
-    Popen.communicate(input=None, timeout=None)
+    p.communicate(input=None, timeout=None)
     while True:
         ret, frame = video.read()
 
