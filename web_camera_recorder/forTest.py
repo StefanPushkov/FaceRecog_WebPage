@@ -13,7 +13,7 @@ import pickle
 import face_recognition
 # ffmpeg setup
 def StreamRecog():
-    video = cv2.VideoCapture('rtsp://80.254.24.22:554')
+    video = cv2.VideoCapture('rtsp://80.254.24.22:554/ch1-s1?tcp')
     #video.set(cv2.CAP_PROP_FPS, 25)
     data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
     known_encodings, known_names = data['encodings'], data['names']
