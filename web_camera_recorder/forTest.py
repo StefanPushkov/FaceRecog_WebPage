@@ -24,8 +24,8 @@ def StreamRecog():
     #           'rtmp://78.46.97.176:1935/vasrc/faceTestInput']
 
     # Resized  1440x810, # Not resized 1920x1080
-    p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1920x1080',
-               '-i', '-', '-c:v', 'libx264', '-crf', '20', '-preset', 'ultrafast', '-f', 'flv',
+    p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '960x540',
+               '-i', '-', '-c:v', 'libx264', '-crf', '40', '-preset', 'ultrafast', '-f', 'flv',
                'rtmp://78.46.97.176:1935/vasrc/ttty'], stdin=PIPE)
     while True:
         ret, frame = video.read()
@@ -35,7 +35,7 @@ def StreamRecog():
             if frame_counter % 5 == 0:
                 rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 # Resize frame of video to 1/4 size for faster face recognition processing
-                #rgb_resize = cv2.resize(rgb, (0, 0), fx=0.75, fy=0.75)
+                rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
 
                 boxes = face_recognition.face_locations(rgb,
                                                         model='hog')
@@ -91,7 +91,7 @@ def StreamRecog():
                     cv2.putText(rgb, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                                 0.75, (0, 255, 0), 2)
                 #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
-                p.stdin.write(frame.tostring())
+                p.stdin.write(rgb.tostring())
                 # im = Image.fromarray(frame)
                 # im.save(p.stdin, 'YUV420')
         else:
