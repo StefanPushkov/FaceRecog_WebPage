@@ -34,7 +34,7 @@ def StreamRecog():
         if ret:
 
             rgb = imutils.resize(frame, height=960, width=540)
-            rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            rgb = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
             # Resize frame of video to 1/4 size for faster face recognition processing
             #rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
 
