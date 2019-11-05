@@ -5,51 +5,49 @@ import pickle
 import face_recognition
 import imutils
 import datetime
+from subprocess import Popen, PIPE
 import time
 
 data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
 known_encodings, known_names = data['encodings'], data['names']
 
-def video_stream():
-    #video_camera = cv2.VideoCapture(0)
-    time.sleep(2.0)
-    video_camera = cv2.VideoCapture('rtsp://192.168.10.165:554')
-    video_camera.set(cv2.CAP_PROP_FPS, 25)
-    # video_camera = open_cam_rtsp("rtsp://170.93.143.139/rtplive/470011e600ef003a004ee33696235daa", 1920, 1080, 200)
+def StreamRecog():
+    video = cv2.VideoCapture('rtsp://192.168.10.165:554')
+    #video.set(cv2.CAP_PROP_FPS, 25)
+    data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
+    known_encodings, known_names = data['encodings'], data['names']
+    frame_counter = 0
 
+    #['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420', '-s', '1440x810', '-r', '25',
+    #           '-i', 'pipe:0', '-c:v', 'libx264', '-crf', '20', '-preset', 'veryfast', '-f', 'flv',
+    #           'rtmp://78.46.97.176:1935/vasrc/faceTestInput']
 
-
+    # Resized  1440x810, # Not resized 1920x1080
+    p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-s', '1440x810',
+               '-i', '-', '-c:v', 'libx264', '-crf', '20', '-preset', 'ultrafast', '-f', 'flv',
+               '-b:v', '5000k', 'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
     frame_counter = 0
     while True:
         # Grab video frames
-        ret, frame = video_camera.read()
+        ret, frame = video.read()
         frame_counter += 1
         if ret:
             if frame_counter % 5 == 0:
-
-                # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
                 rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-                # cv2.imshow('A', rgb_resize)
-                key = cv2.waitKey(1) & 0xFF
+                frame = cv2.cvtColor(rgb, cv2.COLOR_BGR2YUV_I420)
+                p.stdin.write(frame.tostring())
 
-                if key == ord("q"):
-                    break
-                sys.stdout.write(str(rgb.tostring()))
-    video_camera.release()
+        else:
+            break
+
+    p.stdin.close()
+    p.wait()
+    video.release()
     cv2.destroyAllWindows()
-    # ret, rgb_resize = cv2.imencode('.jpg', rgb_resize)
-    # sys.stdout.write(str(rgb_resize.tostring()))
 
-    # sys.stdout.write(rgb_resize.tostring())
-    # return rgb_resize.tostring()
+StreamRecog()
 
-
-    # else:
-    #    yield (b'--frame\r\n'
-    #           b'Content-Type: image/jpeg\r\n\r\n' + global_frame + b'\r\n\r\n')
-
-video_stream()
 
 # try:
 #     video_stream()
