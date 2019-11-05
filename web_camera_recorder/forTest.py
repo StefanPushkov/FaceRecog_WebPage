@@ -90,8 +90,8 @@ def StreamRecog():
                     y = top - 15 if top - 15 > 15 else top + 15
                     cv2.putText(rgb, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                                 0.75, (0, 255, 0), 2)
-                #frame = cv2.cvtColor(frame, cv2.COLOR_BGR2YUV_I420)
-                p.stdin.write(rgb.tostring())
+                yuv = cv2.cvtColor(rgb, cv2.COLOR_BGR2YUV_I420)
+                p.stdin.write(yuv.tostring())
                 # im = Image.fromarray(frame)
                 # im.save(p.stdin, 'YUV420')
         else:
