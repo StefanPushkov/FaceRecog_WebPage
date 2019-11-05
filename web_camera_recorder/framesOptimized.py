@@ -13,7 +13,7 @@ known_encodings, known_names = data['encodings'], data['names']
 def video_stream():
     #video_camera = cv2.VideoCapture(0)
     time.sleep(2.0)
-    video_camera = cv2.VideoCapture('rtsp://80.254.24.22:554')
+    video_camera = cv2.VideoCapture('rtsp://192.168.10.165:554')
     video_camera.set(cv2.CAP_PROP_FPS, 25)
     # video_camera = open_cam_rtsp("rtsp://170.93.143.139/rtplive/470011e600ef003a004ee33696235daa", 1920, 1080, 200)
 
