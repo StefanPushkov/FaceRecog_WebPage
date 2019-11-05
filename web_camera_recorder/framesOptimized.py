@@ -25,7 +25,7 @@ def StreamRecog():
     # Resized  1440x810, # Not resized 1920x1080
     p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1920x1080',
                '-i', '-', '-c:v', 'libx264', '-crf', '20', '-preset', 'ultrafast', '-f', 'flv',
-               'rtmp://78.46.97.176:1935/xxxxxx/yyyy'], stdin=PIPE)
+               'rtmp://78.46.97.176:1935/vasrc/ttty'], stdin=PIPE)
     frame_counter = 0
     while True:
         # Grab video frames
