@@ -24,7 +24,7 @@ def StreamRecog():
     #           'rtmp://78.46.97.176:1935/vasrc/faceTestInput']
 
     # Resized  1440x810, # Not resized 1920x1080
-    p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '960x540',
+    p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1920x1080',
                '-i', '-', '-c:v', 'libx264', '-crf', '35', '-preset', 'ultrafast', '-f', 'flv',
                'rtmp://78.46.97.176:1935/vasrc/ttty'], stdin=PIPE)
     while True:
@@ -35,7 +35,7 @@ def StreamRecog():
             if frame_counter % 5 == 0:
                 rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 # Resize frame of video to 1/4 size for faster face recognition processing
-                rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
+                #rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
 
                 boxes = face_recognition.face_locations(rgb,
                                                         model='hog')
