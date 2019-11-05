@@ -12,7 +12,7 @@ data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb"
 known_encodings, known_names = data['encodings'], data['names']
 
 def StreamRecog():
-    video = cv2.VideoCapture('rtsp://192.168.10.165:554')
+    video = cv2.VideoCapture('rtsp://80.254.24.22:554')
     #video.set(cv2.CAP_PROP_FPS, 25)
     data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
     known_encodings, known_names = data['encodings'], data['names']
