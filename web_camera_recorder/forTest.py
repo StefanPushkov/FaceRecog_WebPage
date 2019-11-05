@@ -35,7 +35,7 @@ def StreamRecog():
 
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             # Resize frame of video to 1/4 size for faster face recognition processing
-            rgb = imutils.resize(rgb, width=540, height=960)
+            rgb = imutils.resize(rgb, height=960, width=540)
             #rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
 
             boxes = face_recognition.face_locations(rgb,
@@ -91,7 +91,7 @@ def StreamRecog():
                 y = top - 15 if top - 15 > 15 else top + 15
                 cv2.putText(rgb, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.75, (0, 255, 0), 2)
-            yuv = cv2.cvtColor(rgb, cv2.COLOR_RGB2YUV_I420)
+            yuv = cv2.cvtColor(rgb, cv2.COLOR_RGB2YUV)
             p.stdin.write(yuv.tostring())
                 # im = Image.fromarray(frame)
                 # im.save(p.stdin, 'YUV420')
