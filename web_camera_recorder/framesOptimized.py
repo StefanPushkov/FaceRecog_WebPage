@@ -23,7 +23,7 @@ def StreamRecog():
     #           'rtmp://78.46.97.176:1935/vasrc/faceTestInput']
 
     # Resized  1440x810, # Not resized 1920x1080
-    p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-s', '1440x810',
+    p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810',
                '-i', '-', '-c:v', 'libx264', '-crf', '20', '-preset', 'ultrafast', '-f', 'flv',
                '-b:v', '5000k', 'rtmp://78.46.97.176:1935/vasrc/faceTestInput'], stdin=PIPE)
     frame_counter = 0
