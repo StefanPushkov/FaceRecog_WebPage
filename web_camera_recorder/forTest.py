@@ -13,7 +13,7 @@ import pickle
 import face_recognition
 # ffmpeg setup
 def StreamRecog():
-    video = cv2.VideoCapture('rtsp://80.254.24.22:1240')
+    video = cv2.VideoCapture('rtsp://80.254.24.22:554')
     #video.set(cv2.CAP_PROP_FPS, 25)
     data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
     known_encodings, known_names = data['encodings'], data['names']
@@ -35,6 +35,7 @@ def StreamRecog():
 
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             # Resize frame of video to 1/4 size for faster face recognition processing
+            rgb = imutils.resize(rgb, width=540, height=960)
             #rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
 
             boxes = face_recognition.face_locations(rgb,
