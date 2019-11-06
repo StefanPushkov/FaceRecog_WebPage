@@ -14,10 +14,10 @@ import face_recognition
 # ffmpeg setup
 def StreamRecog():
     video = cv2.VideoCapture('rtsp://80.254.24.22:554') # rtsp://192.168.10.165:554 # rtsp://80.254.24.22:554
-    #video.set(cv2.CAP_PROP_FPS, 25)
-    data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
-    known_encodings, known_names = data['encodings'], data['names']
-    frame_counter = 0
+    video.set(cv2.CAP_PROP_FPS, 25)
+    #data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
+    #known_encodings, known_names = data['encodings'], data['names']
+    #frame_counter = 0
 
     #['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810', '-r', '25',
     #           '-i', 'pipe:0', '-c:v', 'libx264', '-crf', '20', '-preset', 'veryfast', '-f', 'flv',
@@ -29,7 +29,7 @@ def StreamRecog():
                'rtmp://78.46.97.176:1935/vasrc/ttty'], stdin=PIPE)
     while True:
         ret, frame = video.read()
-        frame_counter += 1
+        #frame_counter += 1
 
         if ret:
             rgb = frame
@@ -37,7 +37,7 @@ def StreamRecog():
 
             # Resize frame of video to 1/4 size for faster face recognition processing
             #rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
-
+            '''
             boxes = face_recognition.face_locations(rgb,
                                                         model='hog')
 
@@ -92,6 +92,7 @@ def StreamRecog():
                 cv2.putText(rgb, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.75, (0, 255, 0), 2)
             #rgb = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
+            '''
             yuv = cv2.cvtColor(rgb, cv2.COLOR_BGR2YUV_I420)
             p.stdin.write(yuv.tostring())
                 # im = Image.fromarray(frame)
