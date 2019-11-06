@@ -13,7 +13,7 @@ import pickle
 import face_recognition
 # ffmpeg setup
 def StreamRecog():
-    video = cv2.VideoCapture('rtsp://80.254.24.22:554')
+    video = cv2.VideoCapture('rtsp://80.254.24.22:554') # rtsp://192.168.10.165:554 # rtsp://80.254.24.22:554
     #video.set(cv2.CAP_PROP_FPS, 25)
     data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
     known_encodings, known_names = data['encodings'], data['names']
@@ -25,7 +25,7 @@ def StreamRecog():
 
     # Resized  1440x810, # Not resized 1920x1080
     p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '960x540',
-               '-i', '-', '-c:v', 'libx264', '-crf', '35', '-preset', 'ultrafast', '-f', 'flv',
+               '-i', '-', '-c:v', 'libx264', '-crf', '35', '-preset', 'veryfast', '-f', 'flv',
                'rtmp://78.46.97.176:1935/vasrc/ttty'], stdin=PIPE)
     while True:
         ret, frame = video.read()
@@ -34,7 +34,7 @@ def StreamRecog():
         if ret:
 
             rgb = imutils.resize(frame, height=960, width=540)
-            rgb = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
+            #rgb = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
             # Resize frame of video to 1/4 size for faster face recognition processing
             #rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
 
@@ -91,8 +91,8 @@ def StreamRecog():
                 y = top - 15 if top - 15 > 15 else top + 15
                 cv2.putText(rgb, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.75, (0, 255, 0), 2)
-            yuv = cv2.cvtColor(rgb, cv2.COLOR_RGB2YUV)
-            p.stdin.write(yuv.tostring())
+            #yuv = cv2.cvtColor(rgb, cv2.COLOR_RGB2YUV)
+            p.stdin.write(rgb.tostring())
                 # im = Image.fromarray(frame)
                 # im.save(p.stdin, 'YUV420')
         else:
