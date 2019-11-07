@@ -27,7 +27,7 @@ def StreamRecog():
     p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '960x540',
                '-i', '-', '-c:v', 'libx264', '-crf', '25', '-preset', 'veryfast', '-fflags',
                'nobuffer', '-f', 'flv',
-               'rtmp://78.46.97.176:1935/vasrc/ttty'], stdin=PIPE)
+               'rtmp://78.46.97.176:1935/vasrc/ttyy'], stdin=PIPE)
     while True:
         ret, frame = video.read()
         frame_counter += 1
