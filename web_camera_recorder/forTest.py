@@ -15,8 +15,8 @@ import face_recognition
 def StreamRecog():
     video = cv2.VideoCapture('rtsp://80.254.24.22:554') # rtsp://192.168.10.165:554 # rtsp://80.254.24.22:554
     video.set(cv2.CAP_PROP_FPS, 25)
-    #data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
-    #known_encodings, known_names = data['encodings'], data['names']
+    data = pickle.loads(open(cf.base_dir + '/EncodedFaces/EncodedFaces.pickle', "rb").read())
+    known_encodings, known_names = data['encodings'], data['names']
     #frame_counter = 0
 
     #['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '1440x810', '-r', '25',
@@ -32,14 +32,15 @@ def StreamRecog():
         #frame_counter += 1
 
         if ret:
-            #rgb = frame
-            rgb = imutils.resize(frame, height=540, width=960)
+
+            rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            rgb = imutils.resize(rgb, height=540, width=960)
 
             # Resize frame of video to 1/4 size for faster face recognition processing
             #rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
-            '''
+
             boxes = face_recognition.face_locations(rgb,
-                                                        model='hog')
+                                                    model='hog')
 
             encodings = face_recognition.face_encodings(rgb, boxes)
             names = []
@@ -49,7 +50,7 @@ def StreamRecog():
                 # attempt to match each face in the input image to our known
                 # encodings
                 matches = face_recognition.compare_faces(known_encodings,
-                                                             encoding)
+                                                         encoding)
                 detection_at = datetime.datetime.now()
                 name = "Unknown"
 
@@ -78,6 +79,7 @@ def StreamRecog():
                 csv_line = name + ";" + str(detection_at)
                 with open(cf.base_dir + '/DB_csv/records.csv', 'a') as outfile:
                     outfile.write(csv_line + "\n")
+
             for ((top, right, bottom, left), name) in zip(boxes, names):
                 # rescale the face coordinates
                 top = int(top)
@@ -87,16 +89,15 @@ def StreamRecog():
 
                 # draw the predicted face name on the image
                 cv2.rectangle(rgb, (left, top), (right, bottom),
-                                (0, 255, 0), 2)
+                              (0, 255, 0), 2)
                 y = top - 15 if top - 15 > 15 else top + 15
                 cv2.putText(rgb, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                             0.75, (0, 255, 0), 2)
-            #rgb = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
-            '''
-            yuv = cv2.cvtColor(rgb, cv2.COLOR_BGR2YUV_I420)
+
+            yuv = cv2.cvtColor(rgb, cv2.COLOR_RGB2YUV_I420)
             p.stdin.write(yuv.tostring())
-                # im = Image.fromarray(frame)
-                # im.save(p.stdin, 'YUV420')
+            # im = Image.fromarray(frame)
+            # im.save(p.stdin, 'YUV420')
         else:
             break
 
