@@ -25,77 +25,77 @@ def StreamRecog():
 
     # Resized  1440x810, # Not resized 1920x1080
     p = Popen(['ffmpeg', '-f', 'rawvideo', '-pix_fmt', 'yuv420p', '-s', '960x540',
-               '-i', '-', '-c:v', 'libx264', '-crf', '20', '-preset', 'veryfast', '-f', 'flv',
+               '-i', '-', '-c:v', 'libx264', '-crf', '25', '-preset', 'veryfast', '-f', 'flv',
                'rtmp://78.46.97.176:1935/vasrc/ttty'], stdin=PIPE)
     while True:
         ret, frame = video.read()
         frame_counter += 1
 
         if ret:
-            if frame_counter % 1:
-                rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                rgb = imutils.resize(rgb, height=540, width=960)
 
-                # Resize frame of video to 1/4 size for faster face recognition processing
-                #rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
+            rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            rgb = imutils.resize(rgb, height=540, width=960)
 
-                boxes = face_recognition.face_locations(rgb,
-                                                        model='hog')
+            # Resize frame of video to 1/4 size for faster face recognition processing
+            #rgb = cv2.resize(rgb, (0, 0), fx=0.5, fy=0.5)
 
-                encodings = face_recognition.face_encodings(rgb, boxes)
-                names = []
+            boxes = face_recognition.face_locations(rgb,
+                                                    model='hog')
 
-                # loop over the facial embeddings
-                for encoding in encodings:
-                    # attempt to match each face in the input image to our known
-                    # encodings
-                    matches = face_recognition.compare_faces(known_encodings,
-                                                             encoding)
-                    detection_at = datetime.datetime.now()
-                    name = "Unknown"
+            encodings = face_recognition.face_encodings(rgb, boxes)
+            names = []
 
-                    # check to see if we have found a match
-                    if True in matches:
-                        # find the indexes of all matched faces then initialize a
-                        # dictionary to count the total number of times each face
-                        # was matched
-                        matchedIdxs = [i for (i, b) in enumerate(matches) if b]
-                        counts = {}
+            # loop over the facial embeddings
+            for encoding in encodings:
+                # attempt to match each face in the input image to our known
+                # encodings
+                matches = face_recognition.compare_faces(known_encodings,
+                                                         encoding)
+                detection_at = datetime.datetime.now()
+                name = "Unknown"
 
-                        # loop over the matched indexes and maintain a count for
-                        # each recognized face face
-                        for i in matchedIdxs:
-                            name = known_names[i]
-                            counts[name] = counts.get(name, 0) + 1
+                # check to see if we have found a match
+                if True in matches:
+                    # find the indexes of all matched faces then initialize a
+                    # dictionary to count the total number of times each face
+                    # was matched
+                    matchedIdxs = [i for (i, b) in enumerate(matches) if b]
+                    counts = {}
 
-                        # determine the recognized face with the largest number
-                        # of votes (note: in the event of an unlikely tie Python
-                        # will select first entry in the dictionary)
-                        name = max(counts, key=counts.get)
+                    # loop over the matched indexes and maintain a count for
+                    # each recognized face face
+                    for i in matchedIdxs:
+                        name = known_names[i]
+                        counts[name] = counts.get(name, 0) + 1
 
-                        # update the list of names
-                    names.append(name)
+                    # determine the recognized face with the largest number
+                    # of votes (note: in the event of an unlikely tie Python
+                    # will select first entry in the dictionary)
+                    name = max(counts, key=counts.get)
 
-                    csv_line = name + ";" + str(detection_at)
-                    with open(cf.base_dir + '/DB_csv/records.csv', 'a') as outfile:
-                        outfile.write(csv_line + "\n")
+                    # update the list of names
+                names.append(name)
 
-                for ((top, right, bottom, left), name) in zip(boxes, names):
-                    # rescale the face coordinates
-                    top = int(top)
-                    right = int(right)
-                    bottom = int(bottom)
-                    left = int(left)
+                csv_line = name + ";" + str(detection_at)
+                with open(cf.base_dir + '/DB_csv/records.csv', 'a') as outfile:
+                    outfile.write(csv_line + "\n")
 
-                    # draw the predicted face name on the image
-                    cv2.rectangle(rgb, (left, top), (right, bottom),
-                                  (0, 255, 0), 2)
-                    y = top - 15 if top - 15 > 15 else top + 15
-                    cv2.putText(rgb, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
-                                0.75, (0, 255, 0), 2)
+            for ((top, right, bottom, left), name) in zip(boxes, names):
+                # rescale the face coordinates
+                top = int(top)
+                right = int(right)
+                bottom = int(bottom)
+                left = int(left)
 
-                yuv = cv2.cvtColor(rgb, cv2.COLOR_RGB2YUV_I420)
-                p.stdin.write(yuv.tostring())
+                # draw the predicted face name on the image
+                cv2.rectangle(rgb, (left, top), (right, bottom),
+                              (0, 255, 0), 2)
+                y = top - 15 if top - 15 > 15 else top + 15
+                cv2.putText(rgb, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
+                            0.75, (0, 255, 0), 2)
+
+            yuv = cv2.cvtColor(rgb, cv2.COLOR_RGB2YUV_I420)
+            p.stdin.write(yuv.tostring())
             # im = Image.fromarray(frame)
             # im.save(p.stdin, 'YUV420')
         else:
