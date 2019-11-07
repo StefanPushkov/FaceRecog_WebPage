@@ -32,7 +32,7 @@ def StreamRecog():
         frame_counter += 1
 
         if ret:
-            if frame_counter % 20 == 0:
+            if frame_counter % 1:
                 rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 rgb = imutils.resize(rgb, height=540, width=960)
 
